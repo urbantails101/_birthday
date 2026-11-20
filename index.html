@@ -1,0 +1,134 @@
+body {
+        margin: 0;
+        height: 100vh;
+        background: #071B3D;
+        color: white;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .container {
+        padding: 25px;
+        width: 90%;
+        max-width: 600px;
+    }
+
+    h1 {
+        font-size: clamp(30px, 6vw, 55px);
+        font-weight: 900;
+        margin-bottom: 40px;
+    }
+
+    button {
+        border: none;
+        padding: 15px 35px;
+        margin: 12px;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    #yes, .good {
+        background: white;
+        color: #071B3D;
+    }
+
+    #no, .bad {
+        background: #DCE6F5;
+        color: #071B3D;
+    }
+
+    #no {
+        position: absolute;
+    }
+
+    button:hover {
+        transform: scale(1.08);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    #continue {
+        background: white;
+        color: #071B3D;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="page1">
+    <h1>WILL YOU COME TO MY BIRTHDAY PARTY?</h1>
+    <button id="yes" onclick="correct()">YES</button>
+    <button id="no">NO</button>
+</div>
+
+<div class="container hidden" id="page2">
+    <h1>CORRECT.</h1>
+    <button id="continue" onclick="nextPage()">CONTINUE</button>
+</div>
+
+<div class="container hidden" id="page3">
+    <h1>WHAT ARE YOU BRINGING?</h1>
+    <button class="good" onclick="goodPresent()">A GOOD PRESENT 🎁</button>
+    <button class="bad" onclick="badPresent()">A BAD PRESENT 💀</button>
+</div>
+
+<div class="container hidden" id="page4">
+    <h1 id="finalMessage"></h1>
+</div>
+
+<script>
+const noButton = document.getElementById("no");
+
+function moveNo() {
+    const maxX = window.innerWidth - noButton.offsetWidth;
+    const maxY = window.innerHeight - noButton.offsetHeight;
+
+    noButton.style.left = Math.random() * maxX + "px";
+    noButton.style.top = Math.random() * maxY + "px";
+}
+
+noButton.addEventListener("mouseenter", moveNo);
+noButton.addEventListener("touchstart", function(e) {
+    e.preventDefault();
+    moveNo();
+});
+
+noButton.addEventListener("click", moveNo);
+
+function correct() {
+    document.getElementById("page1").classList.add("hidden");
+    document.getElementById("page2").classList.remove("hidden");
+}
+
+function nextPage() {
+    document.getElementById("page2").classList.add("hidden");
+    document.getElementById("page3").classList.remove("hidden");
+}
+
+function goodPresent() {
+    showFinal("YOU CAN COME 🎉");
+}
+
+function badPresent() {
+    showFinal("NVM UR NOT COMING 💀");
+}
+
+function showFinal(message) {
+    document.getElementById("page3").classList.add("hidden");
+    document.getElementById("page4").classList.remove("hidden");
+    document.getElementById("finalMessage").innerText = message;
+}
+</script>
+
+</body>
+</html>
